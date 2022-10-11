@@ -51,6 +51,7 @@ import com.duckduckgo.mobile.android.vpn.waitlist.store.AtpWaitlistStateReposito
 import com.duckduckgo.mobile.android.vpn.waitlist.store.WaitlistState
 import com.duckduckgo.privacy.config.api.Gpc
 import com.duckduckgo.privacy.config.api.PrivacyFeatureName
+import com.duckduckgo.site.permissions.impl.pixels.SitePermissionsPixel.SitePermissionsPixelName
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
@@ -246,10 +247,12 @@ class SettingsViewModel @Inject constructor(
 
     fun onAutofillSettingsClick() {
         viewModelScope.launch { command.send(Command.LaunchAutofillSettings) }
+        pixel.fire(SETTINGS_AUTOFILL_MANAGEMENT_OPENED)
     }
 
-    fun onLocationClicked() {
+    fun onSitePermissionsClicked() {
         viewModelScope.launch { command.send(Command.LaunchLocation) }
+        pixel.fire(SitePermissionsPixelName.SITE_PERMISSIONS_SETTINGS_VISITED)
     }
 
     fun onAutomaticallyClearWhatClicked() {
